@@ -1,35 +1,10 @@
-import {useQuery, gql} from "@apollo/client"
+import { gql, useMutation } from '@apollo/client';
 
-export const GET_CATEGORY_PRODUCTS = gql`
-    query getCategoryProducts($categoryId: Int) {
-    category(id: $categoryId){
+const ADD_TODO = gql`
+  mutation AddTodo($text: String!) {
+    addTodo(text: $text) {
       id
-      name
-      url_key
-      products{
-        items{
-          id
-          name
-          image{
-            url
-          }
-          popular_icon
-          rating_summary
-          review_count
-          url_key
-          price_range{
-            minimum_price{
-              final_price{
-                value
-              }
-              regular_price{
-                value
-              }
-            }
-          }
-        }
-        total_count
-      }
+      text
     }
   }
-`
+`;

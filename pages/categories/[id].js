@@ -15,28 +15,29 @@ const CategoryDetail = () => {
       categoryId: id,
     }
   })
-        if (loading) return <p>Loading...</p>
+    if (loading) return <p>Loading...</p>
     if (error) return <p>Error :(</p>
     return (
         <div>
+      
           <Typography variant="h4" gutterBottom component="div">
-            {data.category.name}
+            {/* {data.category.name} */}
           </Typography>
-          <Container maxWidth="xl">
+          <Container fixed style={{ backgroundColor: "#EBE8F0", marginTop : 40 }}>
           <Grid container spacing={3} columns={16}>
           {data.category.products.items.map((product)=> (
+            // eslint-disable-next-line react/jsx-key
             <Grid item xs={4}>
-              <Link href={`/categories/list/${product.url_key}`} key={product.id}>
-                <Card key={product.id}sx={{ height: 450,width: 300 }}>
-                  <h2>{product.name}</h2>
+              <Link href={`/categories/list/${product.url_key}`} key={product.id}><a style={{textDecoration: "none", textAlign: "center"}}>
+                <Card key={product.id} sx={{ maxWidth: 345 }}>
                   <CardMedia
                   component="img"
                   image={product.image.url}
                   alt={product.name}
                   height="350"
-                  width="300"
                 />
-                </Card>
+                  <h2>{product.name}</h2>
+                </Card></a>
               </Link>
             </Grid>
           ))}
