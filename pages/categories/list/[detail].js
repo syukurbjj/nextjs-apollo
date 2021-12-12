@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import ReactHtmlParser from "react-html-parser"
 // import {withApollo} from "../../lib/apollo/apolloClient"
 import { GET_PRODUCT } from "../../schema";
+import {useState} from "react"
 import Stack from '@mui/material/Stack';
 import {
   Tooltip, Grid, Box, Chip,
@@ -19,10 +20,12 @@ import { display } from "@mui/system";
 
 
 const detailProduct = () => {
+  const [kategori, setKategori] = useState([]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter()
-  const productName = router.query.productName
+  const productName = router.query.detail
+  console.log(productName)
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     variables: {
@@ -32,12 +35,15 @@ const detailProduct = () => {
   if (loading) return <></>
   if (error) return <p>Error :(</p>
   const productDetail = data.products.items
-
-
-  const addProduct = () => {
-    localStorage.setItem('myCart', productName)
-    console.log('added', productName)
+  
+  const addCategori =()=>{
+      let cart = kategori
+      cart.push(productDetail)   
+      let tmp = JSON.stringify(cart)
+      localStorage.setItem('kategori', tmp)
   }
+
+ 
 
   return (
     <div>
@@ -79,7 +85,7 @@ const detailProduct = () => {
                   </CardContent>
                   <CardActions disableSpacing>
                     <Tooltip title="Add to Cart">
-                      <IconButton aria-label="add to cart" onClick={addProduct}>
+                      <IconButton aria-label="add to cart">
 
                       </IconButton>
                     </Tooltip>
@@ -88,7 +94,7 @@ const detailProduct = () => {
                 <Grid item xs={4} >
                 <Stack spacing={2} direction="row">
                   <Button variant="outlined" color="success" style={{ marginTop: "50%"}}>Beli</Button>
-                  <Button variant="contained" color="success" style={{ marginTop: "50%"}}> + Keranjang</Button>
+                  <Button variant="contained" color="success" style={{ marginTop: "50%"}} onClick={addCategori}> + Keranjang</Button>
                 </Stack>
                 </Grid>
               </Grid>
